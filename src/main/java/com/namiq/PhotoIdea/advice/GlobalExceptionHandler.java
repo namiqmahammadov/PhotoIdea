@@ -53,8 +53,8 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	public GlobalErrorResponse handelDuplicateCustomerException(DuplicateCustomerException exc) {
 		
-		res.setInternalMessage("Customer can not reply");
-		res.setMessage("emailtekararlana bilmez");
+		res.setInternalMessage("Customer with this email already exists ");
+		res.setMessage("Bu email ilə müştəri artıq mövcuddur");
 		res.setCode(404);
 		return res;
 	}
