@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.namiq.PhotoIdea.Exception.DuplicateCustomerException;
 import com.namiq.PhotoIdea.exception.CustomerNotFoundException;
+import com.namiq.PhotoIdea.exception.DuplicateCustomerException;
 import com.namiq.PhotoIdea.exception.MyValidationException;
 import com.namiq.PhotoIdea.response.GlobalErrorResponse;
 import com.namiq.PhotoIdea.response.ValidationErrorModel;
