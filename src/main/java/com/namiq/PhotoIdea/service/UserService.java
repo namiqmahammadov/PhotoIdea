@@ -3,40 +3,30 @@ package com.namiq.PhotoIdea.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.namiq.PhotoIdea.exception.UserNotFoundException;
-import com.namiq.PhotoIdea.repository.UserRepository;
-import com.namiq.PhotoIdea.request.User;
+
+import com.namiq.PhotoIdea.entitiy.Customer;
+import com.namiq.PhotoIdea.entitiy.User;
+import com.namiq.PhotoIdea.exception.CustomerNotFoundException;
+import com.namiq.PhotoIdea.repository.CustomerRepository;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository repository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    // İstifadəçi tap
-    public User findById(String email) {
-        return repository.findById(email)
-                .orElseThrow(() -> new UserNotFoundException("İstifadəçi tapılmadı: " + email));
-    }
+    // Giriş əməliyyatı
+    public User login(String email, String password) {
+        Customer customer = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomerNotFoundException("İstifadəçi tapılmadı: " + email));
 
-    // İstifadəçini yenilə
-    public void editPassword(User user) {
-        user.setPassword(encodePassword(user.getPassword()));
-        repository.save(user);
-    }
+        if (!passwordEncoder.matches(password, customer.getPassword())) {
+            throw new CustomerNotFoundException("Yanlış parol.");
+        }
 
-    // İstifadəçi əlavə et
-    public User addUser(User user) {
-        user.setPassword(encodePassword(user.getPassword()));
-        user.setEnabled(true);
-        return repository.save(user);
-    }
-
-    // Şifrəni `bcrypt` ilə şifrələyir
-    private String encodePassword(String password) {
-        return passwordEncoder.encode(password);
+        return new User(customer); // Müvəffəqiyyətli giriş zamanı `User` obyektini qaytarır
     }
 }

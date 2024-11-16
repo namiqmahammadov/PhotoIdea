@@ -1,52 +1,67 @@
 package com.namiq.PhotoIdea.controller;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.namiq.PhotoIdea.entitiy.Customer;
 import com.namiq.PhotoIdea.exception.MyValidationException;
+import com.namiq.PhotoIdea.repository.CustomerRepository;
 import com.namiq.PhotoIdea.service.CustomerService;
-import jakarta.validation.Valid;
+
+
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping(path = "/customers")
+@CrossOrigin(origins = "*")
 public class CustomerRestController {
+	@Autowired
+	private CustomerService customerService;
+	@Autowired
+	private CustomerRepository customerRepository;
 
-    @Autowired
-    private CustomerService customerService;
+	@PostMapping(path = "/save")
+	public Customer addCustomer(@Valid @RequestBody Customer customer, BindingResult br) {
+		if (br.hasErrors()) {
+			throw new MyValidationException(br);
+		}
 
-    // Müştəri əlavə et
-    @PostMapping
-    public Customer addCustomer(@Valid @RequestBody Customer customer, BindingResult br) {
-        if (br.hasErrors()) {
-            throw new MyValidationException(br);
-        }
-        return customerService.addCustomer(customer);
-    }
+		customer.setId(null);
+		return customerService.addCustomer(customer);
+	}
 
-    // Bütün müştəriləri göstər
-    @GetMapping
-    public List<Customer> findAll() {
-        return customerService.findAll();
-    }
+	@GetMapping
+	public List<Customer> findAll() {
+		return customerRepository.findAll();
 
-    // İD üzrə müştərini göstər
-    @GetMapping("/{id}")
-    public Customer findById(@PathVariable Integer id) {
-        return customerService.findById(id);
-    }
+	}
+	@GetMapping(path = "/customerId/{id}")
+	public Customer findById(@PathVariable Integer id) {
+		return customerService.findById(id);
 
-    // Müştərini yenilə
-    @PutMapping("/{id}")
-    public Customer edit(@PathVariable Integer id, @RequestBody Customer customer) {
-        customer.setId(id);  // Müştəri İD-sini yeniləyir
-        return customerService.edit(customer);
-    }
+	}
+		
+	@PutMapping(path = "/{id}")
+	 
+	public void edit(@PathVariable Integer id,@RequestBody Customer customer) {
+		customerService.findById(customer.getId());
+		customerService.edit(customer);
+	}
+	@DeleteMapping(path = "/customerId/{id}")
+	public void delete(@PathVariable Integer id) {
+		customerService.deleteById(id);
+	}
 
-    // Müştərini sil
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        customerService.deleteById(id);
-    }
 }

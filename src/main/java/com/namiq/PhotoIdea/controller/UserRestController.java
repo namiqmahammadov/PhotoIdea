@@ -2,13 +2,14 @@ package com.namiq.PhotoIdea.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.namiq.PhotoIdea.exception.UserExistsException;
-import com.namiq.PhotoIdea.repository.UserRepository;
-import com.namiq.PhotoIdea.request.User;
+
+import com.namiq.PhotoIdea.entitiy.User;
+import com.namiq.PhotoIdea.service.CustomerService;
 import com.namiq.PhotoIdea.service.UserService;
 
+
 @RestController
-@RequestMapping(path = "/users")
+@RequestMapping("/users")
 @CrossOrigin(origins = "*")
 public class UserRestController {
 
@@ -16,26 +17,18 @@ public class UserRestController {
     private UserService userService;
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomerService customerService;
 
-    // İstifadəçi əlavə et
-    @PostMapping
-    public User addUser(@RequestBody User user) {
-        if (userRepository.existsById(user.getEmail())) {
-            throw new UserExistsException("Bu istifadəçi adı artıq mövcuddur");
-        }
-        return userService.addUser(user);
+    // Giriş
+    @PostMapping("/login")
+    public User loginUser(@RequestParam String email, @RequestParam String password) {
+        return userService.login(email, password);
     }
 
     // Parolu yenilə
     @PutMapping("/password")
-    public void editPassword(@RequestBody User user) {
-        userService.editPassword(user);
+    public void updatePassword(@RequestParam String email, @RequestParam String newPassword) {
+        customerService.updatePassword(email, newPassword);
     }
-
-    // Giriş əməliyyatı (Boş metod - əlavə funksionallıq üçün ayrılmışdır)
-    @GetMapping("/login")
-    public void login() {
-        // Giriş funksionallığı üçün boş metod, gələcəkdə əlavə edilə bilər.
-    }
+  
 }
