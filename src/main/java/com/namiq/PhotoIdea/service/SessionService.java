@@ -6,10 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.namiq.PhotoIdea.entitiy.Customer;
 import com.namiq.PhotoIdea.entitiy.Session;
-import com.namiq.PhotoIdea.exception.CustomerNotFoundException;
-import com.namiq.PhotoIdea.exception.ResourceNotFoundException;
 import com.namiq.PhotoIdea.exception.SessionNotFoundException;
 import com.namiq.PhotoIdea.repository.SessionRepository;
 
@@ -50,9 +47,9 @@ public class SessionService {
 	}
 
 	public void deleteSession(Integer id) {
-	    Session session = sessionRepository.findById(id)
-	            .orElseThrow(() -> new SessionNotFoundException("Session not found with id: " + id));
-	    sessionRepository.delete(session);
+		Session session = sessionRepository.findById(id)
+				.orElseThrow(() -> new SessionNotFoundException("Session not found with id: " + id));
+		sessionRepository.delete(session);
 	}
 
 	public List<Session> searchSessions(String keyword) {

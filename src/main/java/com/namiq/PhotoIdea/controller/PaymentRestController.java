@@ -19,36 +19,36 @@ import com.namiq.PhotoIdea.service.PaymentService;
 @RequestMapping("/payments")
 public class PaymentRestController {
 
-    @Autowired
-    private PaymentService paymentService;
+	@Autowired
+	private PaymentService paymentService;
 
-    // Yeni ödəniş əlavə et
-    @PostMapping
-    public ResponseEntity<Payment> addPayment(@RequestBody Payment payment) {
-        return new ResponseEntity<>(paymentService.addPayment(payment), HttpStatus.CREATED);
-    }
+	// Yeni ödəniş əlavə et
+	@PostMapping
+	public ResponseEntity<Payment> addPayment(@RequestBody Payment payment) {
+		return new ResponseEntity<>(paymentService.addPayment(payment), HttpStatus.CREATED);
+	}
 
-    // Bütün ödənişləri gətir
-    @GetMapping
-    public ResponseEntity<List<Payment>> getAllPayments() {
-        return new ResponseEntity<>(paymentService.getAllPayments(), HttpStatus.OK);
-    }
+	// Bütün ödənişləri gətir
+	@GetMapping
+	public ResponseEntity<List<Payment>> getAllPayments() {
+		return new ResponseEntity<>(paymentService.getAllPayments(), HttpStatus.OK);
+	}
 
-    // Müştərinin ödənişlərini gətir
-    @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<Payment>> getPaymentsByCustomerId(@PathVariable Long customerId) {
-        return new ResponseEntity<>(paymentService.getPaymentsByCustomerId(customerId), HttpStatus.OK);
-    }
+	// Müştərinin ödənişlərini gətir
+	@GetMapping("/customer/{customerId}")
+	public ResponseEntity<List<Payment>> getPaymentsByCustomerId(@PathVariable Long customerId) {
+		return new ResponseEntity<>(paymentService.getPaymentsByCustomerId(customerId), HttpStatus.OK);
+	}
 
-    // Sessiya üçün ödənişləri gətir
-    @GetMapping("/session/{sessionId}")
-    public ResponseEntity<List<Payment>> getPaymentsBySessionId(@PathVariable Long sessionId) {
-        return new ResponseEntity<>(paymentService.getPaymentsBySessionId(sessionId), HttpStatus.OK);
-    }
+	// Sessiya üçün ödənişləri gətir
+	@GetMapping("/session/{sessionId}")
+	public ResponseEntity<List<Payment>> getPaymentsBySessionId(@PathVariable Long sessionId) {
+		return new ResponseEntity<>(paymentService.getPaymentsBySessionId(sessionId), HttpStatus.OK);
+	}
 
-    // Status üzrə ödənişləri gətir
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<Payment>> getPaymentsByStatus(@PathVariable String status) {
-        return new ResponseEntity<>(paymentService.getPaymentsByStatus(status), HttpStatus.OK);
-    }
+	// Status üzrə ödənişləri gətir
+	@GetMapping("/status/{status}")
+	public ResponseEntity<List<Payment>> getPaymentsByStatus(@PathVariable String status) {
+		return new ResponseEntity<>(paymentService.getPaymentsByStatus(status), HttpStatus.OK);
+	}
 }

@@ -39,17 +39,16 @@ public class SessionRestController {
 
 	@PutMapping(path = "/{id}")
 	public ResponseEntity<Session> updateSession(@PathVariable Integer id, @RequestBody Session session) {
-		 Session existingSession = sessionService.findById(id);
-		    session.setId(existingSession.getId()); 
+		Session existingSession = sessionService.findById(id);
+		session.setId(existingSession.getId());
 		return new ResponseEntity<>(sessionService.updateSession(session), HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<Void> deleteSession(@PathVariable Integer id) {
-	    sessionService.deleteSession(id);
-	    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		sessionService.deleteSession(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-
 
 	@GetMapping("/search")
 	public ResponseEntity<List<Session>> searchSessions(@RequestParam String keyword) {

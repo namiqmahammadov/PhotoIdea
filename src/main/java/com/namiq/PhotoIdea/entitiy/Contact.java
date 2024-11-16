@@ -1,6 +1,5 @@
 package com.namiq.PhotoIdea.entitiy;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -17,25 +16,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "payments")
+@Table(name = "contacts")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Payment {
+public class Contact {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; // Ödənişin unikal identifikatoru
-
-	private Long customerId; // Müştərinin identifikatoru
-
-	private Long sessionId; // Sessiyanın identifikatoru
+	private Long id; // Əlaqə qeydin unikallığı
 
 	@Column(nullable = false)
-	private BigDecimal amount; // Ödənilən məbləğ
+	private String name; // Müştərinin adı
+
+	@Column(nullable = false, unique = true)
+	private String email; // Müştərinin e-poçt ünvanı
+
+	@Column(nullable = false, length = 500)
+	private String message; // Müştərinin göndərdiyi mesaj
 
 	@CreationTimestamp
-	private LocalDateTime paymentDate; // Ödənişin tarixi
+	private LocalDateTime createdAt; // Mesajın göndərilmə tarixi
 
-	@Column(nullable = false)
-	private String paymentStatus;
 }

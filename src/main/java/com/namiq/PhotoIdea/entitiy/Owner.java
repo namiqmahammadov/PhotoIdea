@@ -1,9 +1,7 @@
 package com.namiq.PhotoIdea.entitiy;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,25 +15,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "payments")
+@Table(name = "owners")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Payment {
+
+public class Owner {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; // Ödənişin unikal identifikatoru
+	private Long id;
 
-	private Long customerId; // Müştərinin identifikatoru
-
-	private Long sessionId; // Sessiyanın identifikatoru
-
-	@Column(nullable = false)
-	private BigDecimal amount; // Ödənilən məbləğ
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String phoneNumber;
+	private String role; // Məsələn, "photo expert", "manager"
 
 	@CreationTimestamp
-	private LocalDateTime paymentDate; // Ödənişin tarixi
-
-	@Column(nullable = false)
-	private String paymentStatus;
+	private LocalDateTime createdAt;
 }
