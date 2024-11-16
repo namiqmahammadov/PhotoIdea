@@ -15,18 +15,15 @@ import com.namiq.PhotoIdea.repository.CustomerRepository;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("İstifadəçi tapılmadı: " + email));
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Customer customer = customerRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("İstifadəçi tapılmadı: " + email));
 
-        return new org.springframework.security.core.userdetails.User(
-                customer.getEmail(),
-                customer.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("USER"))
-        );
-    }
+		return new org.springframework.security.core.userdetails.User(customer.getEmail(), customer.getPassword(),
+				Collections.singletonList(new SimpleGrantedAuthority("USER")));
+	}
 }

@@ -7,28 +7,27 @@ import com.namiq.PhotoIdea.entitiy.User;
 import com.namiq.PhotoIdea.service.CustomerService;
 import com.namiq.PhotoIdea.service.UserService;
 
-
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "*")
 public class UserRestController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Autowired
-    private CustomerService customerService;
+	@Autowired
+	private CustomerService customerService;
 
-    // Giriş
-    @PostMapping("/login")
-    public User loginUser(@RequestParam String email, @RequestParam String password) {
-        return userService.login(email, password);
-    }
+	// Giriş
+	@PostMapping("/login")
+	public User loginUser(@RequestParam String email, @RequestParam String password) {
+		return userService.login(email, password);
+	}
 
-    // Parolu yenilə
-    @PutMapping("/password")
-    public void updatePassword(@RequestParam String email, @RequestParam String newPassword) {
-        customerService.updatePassword(email, newPassword);
-    }
-  
+	// Parolu yenilə
+	@PutMapping("/password")
+	public void updatePassword(@RequestParam String email, @RequestParam String newPassword) {
+		customerService.updatePassword(email, newPassword);
+	}
+
 }

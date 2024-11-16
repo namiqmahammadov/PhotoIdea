@@ -6,15 +6,15 @@ public class MyValidationException extends RuntimeException {
 	/**
 	 * 
 	 */
-private static final long serialVersionUID = 1L;
-private BindingResult result;
+	private static final long serialVersionUID = 1L;
+	private BindingResult result;
 
-public BindingResult getResult() {
-	return result;
-}
+	public BindingResult getResult() {
+		return result;
+	}
 
-public MyValidationException(BindingResult result) {
-	this.result = result;
-}
+	public MyValidationException(BindingResult result) {
+		this.result = result;
+	}
 
 }

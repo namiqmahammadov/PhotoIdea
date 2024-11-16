@@ -12,21 +12,21 @@ import com.namiq.PhotoIdea.repository.CustomerRepository;
 @Service
 public class UserService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
-    // Giriş əməliyyatı
-    public User login(String email, String password) {
-        Customer customer = customerRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomerNotFoundException("İstifadəçi tapılmadı: " + email));
+	// Giriş əməliyyatı
+	public User login(String email, String password) {
+		Customer customer = customerRepository.findByEmail(email)
+				.orElseThrow(() -> new CustomerNotFoundException("İstifadəçi tapılmadı: " + email));
 
-        if (!passwordEncoder.matches(password, customer.getPassword())) {
-            throw new CustomerNotFoundException("Yanlış parol.");
-        }
+		if (!passwordEncoder.matches(password, customer.getPassword())) {
+			throw new CustomerNotFoundException("Yanlış parol.");
+		}
 
-        return new User(customer); // Müvəffəqiyyətli giriş zamanı `User` obyektini qaytarır
-    }
+		return new User(customer); // Müvəffəqiyyətli giriş zamanı `User` obyektini qaytarır
+	}
 }

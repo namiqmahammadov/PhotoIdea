@@ -21,8 +21,6 @@ import com.namiq.PhotoIdea.exception.MyValidationException;
 import com.namiq.PhotoIdea.repository.CustomerRepository;
 import com.namiq.PhotoIdea.service.CustomerService;
 
-
-
 @RestController
 @RequestMapping(path = "/customers")
 @CrossOrigin(origins = "*")
@@ -47,18 +45,20 @@ public class CustomerRestController {
 		return customerRepository.findAll();
 
 	}
+
 	@GetMapping(path = "/customerId/{id}")
 	public Customer findById(@PathVariable Integer id) {
 		return customerService.findById(id);
 
 	}
-		
+
 	@PutMapping(path = "/{id}")
-	 
-	public void edit(@PathVariable Integer id,@RequestBody Customer customer) {
+
+	public void edit(@PathVariable Integer id, @RequestBody Customer customer) {
 		customerService.findById(customer.getId());
 		customerService.edit(customer);
 	}
+
 	@DeleteMapping(path = "/customerId/{id}")
 	public void delete(@PathVariable Integer id) {
 		customerService.deleteById(id);
