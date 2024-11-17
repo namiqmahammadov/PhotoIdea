@@ -16,3 +16,4 @@ public class User {
 		this.password = customer.getPassword();
 	}
 }
+
